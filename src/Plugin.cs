@@ -9,10 +9,13 @@ namespace ElinQoL;
 public sealed class Plugin : BaseUnityPlugin
 {
     private Harmony? harmony;
+    private static ModConfig? settings;
+
+    internal static bool MineOnMoveEnabled => settings?.MineOnMove.Value == true;
 
     private void Awake()
     {
-        var settings = new ModConfig(Config);
+        settings = new ModConfig(Config);
         if (!settings.Enabled.Value)
         {
             Logger.LogInfo($"{ModInfo.Name} is disabled by configuration.");
@@ -23,9 +26,8 @@ public sealed class Plugin : BaseUnityPlugin
         try
         {
             // このアセンブリの [HarmonyPatch] クラスだけを登録する。
-            // 現段階ではパッチはなく、ゲームの挙動は変更しない。
             harmony.PatchAll(typeof(Plugin).Assembly);
-            Logger.LogInfo($"{ModInfo.Name} v{ModInfo.Version} loaded (scaffold).");
+            Logger.LogInfo($"{ModInfo.Name} v{ModInfo.Version} loaded.");
         }
         catch (Exception exception)
         {
@@ -36,6 +38,7 @@ public sealed class Plugin : BaseUnityPlugin
 
     private void OnDestroy()
     {
+        settings = null;
         RemovePatches();
     }
 

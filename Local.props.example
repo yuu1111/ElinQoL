@@ -1,6 +1,5 @@
 <Project>
   <PropertyGroup>
-    <!-- このファイルを Local.props にコピーし、ゲームの導入先を指定してください。 -->
     <ElinGamePath>C:/Program Files (x86)/Steam/steamapps/common/Elin</ElinGamePath>
   </PropertyGroup>
 </Project>

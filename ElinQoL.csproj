@@ -14,9 +14,9 @@
     <BepInExPath>$(ElinGamePath)/BepInEx/core</BepInExPath>
   </PropertyGroup>
   <ItemGroup>
-    <GameReference Include="$(BepInExPath)/BepInEx.Core.dll;$(BepInExPath)/BepInEx.Unity.dll;$(BepInExPath)/0Harmony.dll;$(ManagedPath)/UnityEngine.dll;$(ManagedPath)/UnityEngine.CoreModule.dll;$(ManagedPath)/Elin.dll" />
+    <GameReference Include="$(BepInExPath)/BepInEx.Core.dll;$(BepInExPath)/BepInEx.Unity.dll;$(BepInExPath)/0Harmony.dll;$(ManagedPath)/UnityEngine.dll;$(ManagedPath)/UnityEngine.CoreModule.dll;$(ManagedPath)/Elin.dll;$(ManagedPath)/Plugins.BaseCore.dll;$(ManagedPath)/Plugins.UI.dll" />
     <Reference Include="@(GameReference)" Private="false" />
-    <Compile Remove="artifacts/**/*.cs" />
+    <Compile Remove="artifacts/**/*.cs;tests/**/*.cs" />
   </ItemGroup>
   <Target Name="ValidateGameReferences" BeforeTargets="ResolveAssemblyReferences">
     <Error Condition="!Exists('%(GameReference.Identity)')" Text="参照DLLがありません: %(GameReference.Identity)。ElinGamePath を Local.props または -p:ElinGamePath=... で指定してください。BepInEx はゲーム同梱のものを使用します。" />
