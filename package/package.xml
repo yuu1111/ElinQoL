@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+  <title>ElinQoL</title>
+  <id>com.github.yuu1111.elinqol</id>
+  <author>yuu1111</author>
+  <loadPriority>100</loadPriority>
+  <!-- Mod 自体のバージョンではなく、参照DLLのゲームバージョン。ゲーム内動作は未確認。 -->
+  <version>0.23.355</version>
+  <tags>QoL,Utility</tags>
+  <description>QoL 機能を追加するための開発用の下地です。現時点ではゲームの挙動を変更しません。</description>
+  <builtin>false</builtin>
+  <visibility>Private</visibility>
+</Meta>

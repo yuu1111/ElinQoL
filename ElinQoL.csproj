@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="Local.props" Condition="Exists('Local.props')" />
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <Deterministic>true</Deterministic>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <ElinGamePath Condition="'$(ElinGamePath)' == ''">C:/Program Files (x86)/Steam/steamapps/common/Elin</ElinGamePath>
+    <ManagedPath>$(ElinGamePath)/Elin_Data/Managed</ManagedPath>
+    <BepInExPath>$(ElinGamePath)/BepInEx/core</BepInExPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <GameReference Include="$(BepInExPath)/BepInEx.Core.dll;$(BepInExPath)/BepInEx.Unity.dll;$(BepInExPath)/0Harmony.dll;$(ManagedPath)/UnityEngine.dll;$(ManagedPath)/UnityEngine.CoreModule.dll;$(ManagedPath)/Elin.dll" />
+    <Reference Include="@(GameReference)" Private="false" />
+    <Compile Remove="artifacts/**/*.cs" />
+  </ItemGroup>
+  <Target Name="ValidateGameReferences" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('%(GameReference.Identity)')" Text="参照DLLがありません: %(GameReference.Identity)。ElinGamePath を Local.props または -p:ElinGamePath=... で指定してください。BepInEx はゲーム同梱のものを使用します。" />
+  </Target>
+  <Target Name="StageMod" AfterTargets="Build">
+    <ItemGroup>
+      <ModFile Include="$(TargetPath)" />
+      <ModFile Include="$(TargetDir)$(TargetName).pdb" Condition="Exists('$(TargetDir)$(TargetName).pdb')" />
+      <ModFile Include="package/package.xml" />
+    </ItemGroup>
+    <Copy SourceFiles="@(ModFile)" DestinationFolder="$(MSBuildProjectDirectory)/artifacts/ElinQoL" SkipUnchangedFiles="true" />
+  </Target>
+</Project>
